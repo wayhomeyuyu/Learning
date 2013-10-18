@@ -17,7 +17,7 @@ import junit.framework.TestCase;
 
 public class TestCase1 extends TestCase {
 	private DefaultSelenium selenium;
-
+   // 123
 	@Before
 	public void setUp() throws Exception {
 		selenium = new DefaultSelenium("localhost", 4444, PublicConfig.browser, PublicConfig.web_site);
