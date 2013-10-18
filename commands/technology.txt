@@ -1,0 +1,54 @@
+JMS
+JDO
+ULC
+Spring
+肥胖，
+尿酸偏高，尿潜血阳性
+
+启动mysql
+root@ubuntu:~#/etc/init.d/mysql start
+
+本地可以连接进入数据库。
+root@ubuntu:~#mysql -uroot -p
+
+设置了远程访问权限：
+mysql> grant all PRIVILEGES on *.* to admin@’%’ identified by ‘123456′;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> use information_schema
+mysql> select * from user_privileges;
+查询到有下面的结果：'admin’@'%'，说明mysql已经授权远程连接。
+
+在windows下访问Ubuntu的数据库，连接不上，但是Ubuntu上安装的apache可以访问。
+用iptalbes添加端口3306后也无法访问。
+root@ubuntu:~# iptables -A INPUT -p tcp –dport 3306 -j ACCEPT
+
+
+
+ubuntu@ubuntu:/etc/mysql$ mysql -uroot -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+
+mysql> create database cwx_tpk;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> GRANT ALL PRIVILEGES ON database.* TO username@localhost IDENTIFIED BY "yourpassword";
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT ALL PRIVILEGES ON database.* TO david_tpk@"%" IDENTIFIED BY "yourpassword";
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+
+# backup database
+mysqldump -h 10.109.192.3 -u root -p tpk_dev > tpk_dev_backup.sql
+# restore
+mysqldump -h 10.109.201.58 -u root -proot tpk_dev < tpk_dev_backup.sql
+
+状态查询
+sudo netstat -tap | grep mysql
+
+
+
+sudo netstat -tap | grep delayed_job
+RAILS_ENV=development script/delayed_job start
